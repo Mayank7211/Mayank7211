@@ -20,9 +20,10 @@
 3. Owner receives a tenant-specific widget snippet that can be embedded without custom backend changes.
 4. Requests that do not belong to the authenticated tenant are blocked, and production CORS allows only explicitly configured origins.
 5. Chat and upload endpoints throttle or reject abusive request patterns instead of silently over-consuming resources.
-**Plans**: 3 plans
+**Plans**: 4 plans
 
 Plans:
+- [ ] 01-00-PLAN.md - Produce Wave 0 backend test scaffolds for ONB-01..04 and SEC-01..03 before implementation waves.
 - [ ] 01-01-PLAN.md - Enforce tenant authorization dependencies and explicit-origin CORS hardening.
 - [ ] 01-02-PLAN.md - Implement strict onboarding contracts, parameterized widget snippet defaults, and abuse guardrails.
 - [ ] 01-03-PLAN.md - Deliver onboarding UI error clarity and complete Phase 1 automated verification coverage.
@@ -106,5 +107,8 @@ Coverage check: 21/21 v1 requirements mapped.
 
 ---
 Last updated: 2026-03-21
+
+
+
 
 
