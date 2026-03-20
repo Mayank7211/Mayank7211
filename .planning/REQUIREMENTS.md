@@ -74,23 +74,23 @@
 | ONB-02 | Phase 1 | Pending |
 | ONB-03 | Phase 1 | Pending |
 | ONB-04 | Phase 1 | Pending |
-| CHAT-01 | Phase 2 | Pending |
-| CHAT-02 | Phase 2 | Pending |
-| CHAT-03 | Phase 2 | Pending |
-| CHAT-04 | Phase 2 | Pending |
-| KNOW-01 | Phase 3 | Pending |
-| KNOW-02 | Phase 3 | Pending |
-| KNOW-03 | Phase 3 | Pending |
-| RSV-01 | Phase 4 | Pending |
-| RSV-02 | Phase 4 | Pending |
-| RSV-03 | Phase 4 | Pending |
-| RSV-04 | Phase 4 | Pending |
-| ANA-01 | Phase 5 | Pending |
-| ANA-02 | Phase 5 | Pending |
-| ANA-03 | Phase 5 | Pending |
 | SEC-01 | Phase 1 | Pending |
 | SEC-02 | Phase 1 | Pending |
 | SEC-03 | Phase 1 | Pending |
+| CHAT-01 | Phase 2 | Pending |
+| CHAT-02 | Phase 2 | Pending |
+| CHAT-03 | Phase 2 | Pending |
+| RSV-01 | Phase 3 | Pending |
+| RSV-02 | Phase 3 | Pending |
+| RSV-03 | Phase 3 | Pending |
+| RSV-04 | Phase 3 | Pending |
+| KNOW-01 | Phase 4 | Pending |
+| KNOW-02 | Phase 4 | Pending |
+| KNOW-03 | Phase 4 | Pending |
+| CHAT-04 | Phase 4 | Pending |
+| ANA-01 | Phase 5 | Pending |
+| ANA-02 | Phase 5 | Pending |
+| ANA-03 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 21 total
@@ -99,4 +99,4 @@
 
 ---
 *Requirements defined: 2026-03-21*
-*Last updated: 2026-03-21 after initial definition*
+*Last updated: 2026-03-21 after roadmap creation*
