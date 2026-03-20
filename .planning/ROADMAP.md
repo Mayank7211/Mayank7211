@@ -20,7 +20,12 @@
 3. Owner receives a tenant-specific widget snippet that can be embedded without custom backend changes.
 4. Requests that do not belong to the authenticated tenant are blocked, and production CORS allows only explicitly configured origins.
 5. Chat and upload endpoints throttle or reject abusive request patterns instead of silently over-consuming resources.
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md - Enforce tenant authorization dependencies and explicit-origin CORS hardening.
+- [ ] 01-02-PLAN.md - Implement strict onboarding contracts, parameterized widget snippet defaults, and abuse guardrails.
+- [ ] 01-03-PLAN.md - Deliver onboarding UI error clarity and complete Phase 1 automated verification coverage.
 
 ### Phase 2: Tenant-Aware Chat Baseline
 **Goal**: Website visitors can interact with the widget and receive context-aware responses for the correct business tenant.
@@ -63,12 +68,11 @@
 2. Owner can review recent conversations with timestamps and confidence indicators.
 3. Owner can open a dedicated pending reservations view for operational follow-up.
 **Plans**: TBD
-
 ## Progress Table
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Secure Onboarding Foundation | 0/0 | Not started | - |
+| 1. Secure Onboarding Foundation | 0/3 | Planned | - |
 | 2. Tenant-Aware Chat Baseline | 0/0 | Not started | - |
 | 3. Reservation Capture and Notification Reliability | 0/0 | Not started | - |
 | 4. Knowledge Runtime and Escalation Visibility | 0/0 | Not started | - |
@@ -102,3 +106,5 @@ Coverage check: 21/21 v1 requirements mapped.
 
 ---
 Last updated: 2026-03-21
+
+
