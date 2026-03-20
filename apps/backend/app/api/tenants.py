@@ -1,13 +1,27 @@
-from fastapi import APIRouter, Depends, File, UploadFile, HTTPException, status
+from fastapi import APIRouter, Depends, File, UploadFile, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.dependencies import require_owner_tenant_access
+from app.core.rate_limits import RateLimitExceeded, rate_limiter
 from app.db.session import get_db_session
 from app.models.schemas import KnowledgeIngestRequest, TenantCreateRequest, TenantCreateResponse
 from app.services.assistant_service import assistant_service
 from app.services.document_parser import parse_document
 
 router = APIRouter(prefix="/tenants", tags=["tenants"])
+
+
+def _client_ip(request: Request) -> str:
+    if request.client and request.client.host:
+        return request.client.host
+    return "unknown"
+
+
+async def enforce_upload_rate_limit(request: Request, tenant_id: str) -> None:
+    key = f"upload:{_client_ip(request)}:{tenant_id}"
+    retry_after = rate_limiter.check(key=key, max_requests=5, window_seconds=60)
+    if retry_after is not None:
+        raise RateLimitExceeded(retry_after_seconds=retry_after, detail="Rate limit exceeded")
 
 
 @router.post("", response_model=TenantCreateResponse)
@@ -32,6 +46,7 @@ async def ingest_knowledge(
 async def upload_document(
     tenant_id: str,
     file: UploadFile = File(...),
+    _: None = Depends(enforce_upload_rate_limit),
     _owner_access: None = Depends(require_owner_tenant_access),
     db: AsyncSession = Depends(get_db_session),
 ) -> dict:
@@ -81,6 +96,8 @@ async def upload_document(
             "message": f"Successfully uploaded and processed {file.filename}"
         }
     
+    except HTTPException:
+        raise
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
