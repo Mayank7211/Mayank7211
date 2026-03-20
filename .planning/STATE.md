@@ -4,16 +4,16 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 1
 current_phase_name: Secure Onboarding Foundation
-current_plan: 2
+current_plan: 3
 status: executing
-stopped_at: Completed 01-00-PLAN.md
-last_updated: "2026-03-20T22:06:16.739Z"
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-03-20T22:08:27.748Z"
 last_activity: 2026-03-20
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 4
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ Current focus: Phase 1 secure onboarding execution.
 Current Phase: 1
 Current Phase Name: Secure Onboarding Foundation
 Total Phases: 5
-Current Plan: 2
+Current Plan: 3
 Total Plans in Phase: 4
 Status: Ready to execute
 Last Activity: 2026-03-20
@@ -42,6 +42,7 @@ Progress: [░░░░░░░░░░] 0%
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 01 P00 | 7 min | 1 tasks | 7 files |
+| Phase 01 P01 | 3 min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -50,6 +51,7 @@ Progress: [░░░░░░░░░░] 0%
 - [Phase 1]: Keep brownfield FastAPI + React + widget architecture and avoid disruptive rewrites.
 - [Phase 1]: Prioritize reservation capture plus owner notification reliability before broader optimization work.
 - [Phase 01]: Use collectable Wave 0 placeholder tests before implementation to satisfy Nyquist test-first gating.
+- [Phase 01]: Enforced tenant owner authorization via reusable dependency and HMAC compare_digest token checks.
 
 ### Pending Todos
 
@@ -61,6 +63,6 @@ Progress: [░░░░░░░░░░] 0%
 
 ## Session
 
-Last session: 2026-03-20T22:06:16.737Z
-Stopped At: Completed 01-00-PLAN.md
+Last session: 2026-03-20T22:08:27.745Z
+Stopped At: Completed 01-01-PLAN.md
 Resume File: None

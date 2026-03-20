@@ -24,7 +24,7 @@
 
 Plans:
 - [x] 01-00-PLAN.md - Produce Wave 0 backend test scaffolds for ONB-01..04 and SEC-01..03 before implementation waves.
-- [ ] 01-01-PLAN.md - Enforce tenant authorization dependencies and explicit-origin CORS hardening.
+- [x] 01-01-PLAN.md - Enforce tenant authorization dependencies and explicit-origin CORS hardening.
 - [ ] 01-02-PLAN.md - Implement strict onboarding contracts, parameterized widget snippet defaults, and abuse guardrails.
 - [ ] 01-03-PLAN.md - Deliver onboarding UI error clarity and complete Phase 1 automated verification coverage.
 
