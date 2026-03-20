@@ -7,10 +7,10 @@
 
 ### Onboarding
 
-- [ ] **ONB-01**: Business owner can create a tenant profile with name, domain, services, and description.
-- [ ] **ONB-02**: Business owner can upload supported documents (PDF, DOCX, TXT) during onboarding.
-- [ ] **ONB-03**: System validates file type and file size and returns clear errors for invalid uploads.
-- [ ] **ONB-04**: Business owner receives an embeddable widget snippet with tenant-specific configuration.
+- [x] **ONB-01**: Business owner can create a tenant profile with name, domain, services, and description.
+- [x] **ONB-02**: Business owner can upload supported documents (PDF, DOCX, TXT) during onboarding.
+- [x] **ONB-03**: System validates file type and file size and returns clear errors for invalid uploads.
+- [x] **ONB-04**: Business owner receives an embeddable widget snippet with tenant-specific configuration.
 
 ### Chat Experience
 
@@ -40,9 +40,9 @@
 
 ### Security and Guardrails
 
-- [ ] **SEC-01**: Tenant-scoped endpoints enforce authorization checks beyond tenant ID possession.
-- [ ] **SEC-02**: API CORS policy is restricted to explicit allowed origins for production contexts.
-- [ ] **SEC-03**: Chat and upload endpoints enforce abuse protections (rate limits and/or request guards).
+- [x] **SEC-01**: Tenant-scoped endpoints enforce authorization checks beyond tenant ID possession.
+- [x] **SEC-02**: API CORS policy is restricted to explicit allowed origins for production contexts.
+- [x] **SEC-03**: Chat and upload endpoints enforce abuse protections (rate limits and/or request guards).
 
 ## v2 Requirements
 
@@ -70,13 +70,13 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ONB-01 | Phase 1 | Pending |
-| ONB-02 | Phase 1 | Pending |
-| ONB-03 | Phase 1 | Pending |
-| ONB-04 | Phase 1 | Pending |
-| SEC-01 | Phase 1 | Pending |
-| SEC-02 | Phase 1 | Pending |
-| SEC-03 | Phase 1 | Pending |
+| ONB-01 | Phase 1 | Complete |
+| ONB-02 | Phase 1 | Complete |
+| ONB-03 | Phase 1 | Complete |
+| ONB-04 | Phase 1 | Complete |
+| SEC-01 | Phase 1 | Complete |
+| SEC-02 | Phase 1 | Complete |
+| SEC-03 | Phase 1 | Complete |
 | CHAT-01 | Phase 2 | Pending |
 | CHAT-02 | Phase 2 | Pending |
 | CHAT-03 | Phase 2 | Pending |
