@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agent Widget - Installation Guide</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #667eea;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    code {
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-family: 'Courier New', monospace;
+      color: #d63384;
+    }
+
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .step {
+      background: #f9f9f9;
+      border-left: 4px solid #667eea;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 6px;
+    }
+
+    .step strong {
+      color: #667eea;
+    }
+
+    .demo-button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 20px;
+      transition: transform 0.2s;
+    }
+
+    .demo-button:hover {
+      transform: scale(1.05);
+    }
+
+    .highlight {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+
+    .success {
+      background: #d4edda;
+      border: 1px solid #28a745;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+      color: #155724;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 AI Agent Widget - Installation Guide</h1>
+
+    <p>
+      Add a working AI assistant to any website in seconds. The widget handles conversations,
+      appointment bookings, FAQs, and more using your business information.
+    </p>
+
+    <h2>Quick Start (3 steps)</h2>
+
+    <div class="step">
+      <strong>Step 1: Get Your Tenant ID</strong>
+      <p>
+        Create a business profile in the onboarding form. You'll receive a <code>tenant_id</code>
+        and an embed script. Save the <code>tenant_id</code>.
+      </p>
+    </div>
+
+    <div class="step">
+      <strong>Step 2: Add This Script to Your Website</strong>
+      <p>Paste this into the <code>&lt;head&gt;</code> or before <code>&lt;/body&gt;</code>:</p>
+      <pre>&lt;script 
+  src="https://your-backend-domain.com/widget/agent.js" 
+  data-tenant-id="YOUR_TENANT_ID"&gt;
+&lt;/script&gt;</pre>
+    </div>
+
+    <div class="step">
+      <strong>Step 3: Done!</strong>
+      <p>
+        A chat button will appear in the bottom-right corner of your website.
+        Your customers can now chat with your AI assistant.
+      </p>
+    </div>
+
+    <div class="success">
+      ✓ The widget is fully self-contained - no other code changes required
+    </div>
+
+    <h2>Features</h2>
+    <ul style="margin-left: 20px; color: #555;">
+      <li><strong>Appointment Bookings:</strong> AI detects booking requests and collects customer info</li>
+      <li><strong>Conversation Memory:</strong> Assistant remembers what was discussed in same session</li>
+      <li><strong>Business Context:</strong> Answers based on your business info and knowledge base</li>
+      <li><strong>Handoff Detection:</strong> Escalates complex issues to humans when needed</li>
+      <li><strong>Mobile Friendly:</strong> Works on all devices and screen sizes</li>
+      <li><strong>Session Tracking:</strong> Maintains conversation history per visitor</li>
+    </ul>
+
+    <h2>Configuration</h2>
+    <p>The widget needs to know where your backend API is running. Update the API URL in agent.js:</p>
+    <pre>const API_BASE_URL = 'http://localhost:8000/api'; // Change this to your backend</pre>
+
+    <div class="highlight">
+      <strong>⚠️ For Production:</strong> 
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>Change <code>API_BASE_URL</code> to your actual backend domain (with HTTPS)</li>
+        <li>Enable CORS for your domain in the backend</li>
+        <li>Host agent.js on a CDN or your server</li>
+      </ul>
+    </div>
+
+    <h2>Customization</h2>
+    <p>You can customize the widget appearance by editing the CSS in agent.js:</p>
+    <ul style="margin-left: 20px; color: #555;">
+      <li><strong>Colors:</strong> Change <code>#667eea</code> and <code>#764ba2</code> for gradients</li>
+      <li><strong>Position:</strong> Modify <code>bottom: 20px; right: 20px;</code> in .ai-agent-widget</li>
+      <li><strong>Size:</strong> Adjust <code>width: 400px; height: 600px;</code> for chat window</li>
+      <li><strong>Welcome Message:</strong> Edit the message in the demo section</li>
+    </ul>
+
+    <h2>What's Next?</h2>
+    <ol style="margin-left: 20px; color: #555;">
+      <li>Start the backend API: <code>uvicorn app.main:app --reload</code></li>
+      <li>Create a business profile in the onboarding form</li>
+      <li>Get your tenant ID from the response</li>
+      <li>Embed the widget on your test website</li>
+      <li>Chat with your AI assistant!</li>
+    </ol>
+
+    <h2>Backend API Endpoints</h2>
+    <p>The widget uses these endpoints:</p>
+    <ul style="margin-left: 20px; color: #555;">
+      <li><code>POST /api/chat</code> - Send message and get response</li>
+      <li><code>POST /api/tenants</code> - Create business profile (from onboarding)</li>
+      <li><code>POST /api/tenants/{tenant_id}/knowledge</code> - Add business knowledge</li>
+    </ul>
+
+    <h2>Demo</h2>
+    <p>
+      To test the widget locally, update the API_BASE_URL to your running backend,
+      then reload this page. A chat button should appear in the corner.
+    </p>
+  </div>
+
+  <!-- Optional: Embed the widget here for demo -->
+  <!-- 
+  <script src="./agent.js" data-tenant-id="demo-tenant-id"></script>
+  -->
+</body>
+</html>

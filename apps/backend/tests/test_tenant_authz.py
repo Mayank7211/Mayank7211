@@ -1,11 +1,26 @@
-import pytest
+import hashlib
+import hmac
 
 
-@pytest.mark.skip(reason="Wave 0 scaffold; implemented in later plans")
-def test_owner_token_required() -> None:
-    """SEC-01: protected owner endpoint returns 401 when token is missing."""
+def test_owner_token_required(client, tenant_id) -> None:
+    response = client.get(f"/api/analytics/tenants/{tenant_id}/stats")
+
+    assert response.status_code == 401
+    assert "Missing owner authentication token" in response.json()["detail"]
 
 
-@pytest.mark.skip(reason="Wave 0 scaffold; implemented in later plans")
-def test_cross_tenant_forbidden() -> None:
-    """SEC-01: token bound to another tenant is denied with 403."""
+def test_cross_tenant_forbidden(client, tenant_id, owner_access_secret) -> None:
+    wrong_tenant_id = "tenant-wrong-002"
+    wrong_token = hmac.new(
+        owner_access_secret.encode("utf-8"),
+        wrong_tenant_id.encode("utf-8"),
+        hashlib.sha256,
+    ).hexdigest()
+
+    response = client.get(
+        f"/api/analytics/tenants/{tenant_id}/stats",
+        headers={"X-Owner-Token": wrong_token},
+    )
+
+    assert response.status_code == 403
+    assert "Cross-tenant access denied" in response.json()["detail"]
