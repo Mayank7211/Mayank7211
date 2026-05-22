@@ -1,0 +1,23 @@
+name: Retrieval Evaluation Smoke
+on: [push, pull_request]
+
+jobs:
+  retrieval-eval:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Run retrieval evaluation smoke
+        run: |
+          # Use in-memory adapter and sample fixtures; skip heavy DB/OpenAI parts.
+          python tools/retrieval_eval.py --fixtures apps/backend/tests/fixtures/sample_qa.json --k 3
