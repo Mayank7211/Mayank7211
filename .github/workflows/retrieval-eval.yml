@@ -1,0 +1,27 @@
+name: Retrieval Eval & Tests
+on: [push, pull_request]
+
+jobs:
+  retrieval-eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r apps/backend/requirements.txt || true
+          pip install pytest
+
+      - name: Run unit tests (embedding / ingest smoke)
+        run: |
+          pytest apps/backend/tests/test_embedding_worker.py -q
+          pytest apps/backend/tests/test_non_blocking_ingest.py -q
+
+      - name: Run retrieval eval (smoke)
+        run: |
+          python tools/retrieval_eval.py --smoke

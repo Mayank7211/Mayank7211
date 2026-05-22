@@ -94,3 +94,4 @@ class ChatResponse(BaseModel):
     confidence: float
     handoff_recommended: bool
     reservation_detected: bool = False
+    fallback_reason: Optional[str] = None

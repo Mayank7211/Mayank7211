@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     widget_default_theme: str = "light"
     widget_default_position: str = "bottom-right"
     widget_default_primary_color: str = "#0f766e"
+    enable_pgvector: bool = False
+    retrieval_k: int = 4
 
     @field_validator("allowed_cors_origins", mode="before")
     @classmethod

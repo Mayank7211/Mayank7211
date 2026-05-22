@@ -8,7 +8,7 @@ from app.services import assistant_service as assistant_mod
 
 def _fake_gateway_complete(answer: str = "Hi there", provider: str = "test", model: str = "test-model", confidence: float = 0.95):
     async def _complete(request):
-        return SimpleNamespace(answer=answer, provider=provider, model=model, confidence=confidence)
+        return SimpleNamespace(answer=answer, provider=provider, model=model, confidence=confidence, fallback_reason=None)
 
     return _complete
 

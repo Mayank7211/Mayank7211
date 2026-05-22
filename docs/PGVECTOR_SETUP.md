@@ -60,6 +60,10 @@ Notes
  - The repository now includes an async worker at `apps/backend/scripts/async_compute_embeddings.py` which is the recommended tool to batch-populate embeddings.
  - Use `apps/backend/scripts/run_embedding_worker.py` to keep the worker running; a systemd template is provided at `infra/systemd/embedding-worker.service`.
 
+Additional utilities
+--------------------
+
+- A small retrieval evaluation harness is available at `tools/retrieval_eval.py` with a smoke mode that runs against the in-memory adapter; see `docs/RETRIEVAL_EVALUATION.md` for usage.
 Running the worker as a background service (systemd)
 -------------------------------------------------
 
