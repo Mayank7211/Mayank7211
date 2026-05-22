@@ -31,6 +31,14 @@ This document describes how to enable Postgres + pgvector support for the projec
    - Choose an embedding provider (OpenAI, local model, etc.).
    - Add a small worker or migration script that computes embeddings for `raw_text` and writes them to `embedding`.
 
+      Example worker (included): `apps/backend/scripts/compute_embeddings.py` — run:
+
+      ```bash
+      AI_AGENT_DATABASE_URL="postgresql+asyncpg://user:pass@host:5432/dbname" \
+      AI_AGENT_OPENAI_API_KEY="sk-..." \
+      python apps/backend/scripts/compute_embeddings.py
+      ```
+
 5. Querying
    - Replace the interim client-side ranking in `PgVectorAdapter.query` with a SQL similarity search, e.g.:
 
@@ -47,4 +55,5 @@ This document describes how to enable Postgres + pgvector support for the projec
 Notes
 -----
 - The current `PgVectorAdapter` is a scaffold that fetches raw_text and ranks client-side; full vector similarity will require the embedding pipeline and schema updates.
+ - The repository includes `infra/sql/002_add_embeddings.sql` and `apps/backend/scripts/compute_embeddings.py` as starting points.
 - Consider using a managed vector DB (Pinecone, Weaviate, or Milvus) if you prefer not to host pgvector.
