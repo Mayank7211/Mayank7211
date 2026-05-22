@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
+import asyncio
 from app.models.entities import ConversationEntity, KnowledgeSourceEntity, TenantEntity, ReservationEntity
 from app.models.schemas import (
     ChatRequest,
@@ -75,6 +76,19 @@ class AssistantService:
 
         await db.commit()
 
+        # Schedule indexing of seeded onboarding knowledge (best-effort, non-blocking)
+        try:
+            idx_res = default_vector_adapter.index_documents(str(tenant.id), seed_knowledge)
+            if hasattr(idx_res, "__await__"):
+                try:
+                    asyncio.create_task(idx_res)
+                except RuntimeError:
+                    loop = asyncio.get_event_loop()
+                    loop.create_task(idx_res)
+        except Exception:
+            # Swallow errors to avoid failing tenant creation
+            pass
+
         return TenantCreateResponse(
             tenant_id=str(tenant.id),
             widget_embed_script=self._build_widget_embed_script(str(tenant.id)),
@@ -102,11 +116,17 @@ class AssistantService:
 
         await db.commit()
 
-        # Notify the vector adapter to index these newly ingested blocks (async-aware)
+        # Notify the vector adapter to index these newly ingested blocks (best-effort, non-blocking)
         try:
             idx_res = default_vector_adapter.index_documents(tenant_id, clean_blocks)
+            # If adapter returned a coroutine, schedule it to run in the background
             if hasattr(idx_res, "__await__"):
-                await idx_res
+                try:
+                    asyncio.create_task(idx_res)
+                except RuntimeError:
+                    # No running loop (e.g., in some test environments) — fallback to ensure_future
+                    loop = asyncio.get_event_loop()
+                    loop.create_task(idx_res)
         except Exception:
             # Indexing is best-effort; do not fail the ingestion if adapter fails
             pass
