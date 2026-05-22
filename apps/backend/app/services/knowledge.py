@@ -72,7 +72,42 @@ class PgVectorAdapter:
         self.embedding_model = embedding_model or os.getenv("AI_AGENT_EMBEDDING_MODEL", "text-embedding-3-small")
 
     def index_documents(self, tenant_id: str, blocks: Iterable[str]) -> None:
-        raise NotImplementedError("PgVectorAdapter.index_documents requires DB integration")
+        # Provide an async-compatible index_documents by returning a coroutine when called
+        async def _index():
+            if not self.db_session_factory:
+                return
+
+            sess_candidate = self.db_session_factory()
+            if hasattr(sess_candidate, "__await__"):
+                sess_candidate = await sess_candidate
+
+            async with sess_candidate as session:
+                for block in blocks:
+                    if not block or not block.strip():
+                        continue
+                    try:
+                        vec = self._get_query_embedding(block)
+                    except Exception:
+                        # If embedding computation fails, skip this block
+                        continue
+
+                    # Find the most recent row for this tenant/raw_text without embedding
+                    sel = __import__("sqlalchemy").sql.text(
+                        "SELECT id FROM knowledge_sources WHERE tenant_id = :tid AND raw_text = :raw AND (embedding IS NULL OR array_length(embedding,1) = 0) ORDER BY created_at DESC LIMIT 1"
+                    )
+                    res = await session.execute(sel, {"tid": tenant_id, "raw": block})
+                    row = res.fetchall()
+                    if not row:
+                        # No matching row to update
+                        continue
+                    row_id = row[0][0]
+                    upd = __import__("sqlalchemy").sql.text(
+                        "UPDATE knowledge_sources SET embedding = :vec WHERE id = :id"
+                    )
+                    await session.execute(upd, {"vec": vec, "id": row_id})
+                await session.commit()
+
+        return _index()
 
     async def query(self, tenant_id: str, query: str, top_k: int) -> List[str]:
         """Fetch raw_text entries for `tenant_id` from the DB and rank them.

@@ -11,7 +11,8 @@ from app.models.schemas import (
     TenantCreateRequest,
     TenantCreateResponse,
 )
-from app.services.knowledge import rank_context_blocks
+from app.services.knowledge import rank_context_blocks, default_vector_adapter
+from app.core.config import settings
 from app.services.model_gateway import (
     BackupOpenModelProvider,
     GroqProvider,
@@ -101,6 +102,15 @@ class AssistantService:
 
         await db.commit()
 
+        # Notify the vector adapter to index these newly ingested blocks (async-aware)
+        try:
+            idx_res = default_vector_adapter.index_documents(tenant_id, clean_blocks)
+            if hasattr(idx_res, "__await__"):
+                await idx_res
+        except Exception:
+            # Indexing is best-effort; do not fail the ingestion if adapter fails
+            pass
+
         return {
             "tenant_id": tenant_id,
             "indexed_blocks": len(clean_blocks),
@@ -108,6 +118,20 @@ class AssistantService:
         }
 
     async def _load_context(self, tenant_id: str, query: str, db: AsyncSession) -> list[str]:
+        """Load context using the configured vector adapter if available, otherwise fall back to DB token-overlap ranking."""
+        # prefer adapter-based retrieval (pluggable)
+        try:
+            top_k = getattr(settings, "retrieval_k", self.max_context_chunks)
+            results = default_vector_adapter.query(tenant_id, query, top_k)
+            # adapter may be async — await if needed
+            if hasattr(results, "__await__"):
+                results = await results
+            if results:
+                return results
+        except Exception:
+            # adapter failed or not configured; fall back to DB token-overlap
+            pass
+
         result = await db.execute(
             select(KnowledgeSourceEntity.raw_text)
             .where(KnowledgeSourceEntity.tenant_id == tenant_id)
@@ -207,6 +231,7 @@ class AssistantService:
             confidence=model_response.confidence,
             handoff_recommended=handoff_recommended,
             reservation_detected=reservation_detected,
+            fallback_reason=model_response.fallback_reason,
         )
 
 
