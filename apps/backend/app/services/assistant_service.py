@@ -25,6 +25,15 @@ class AssistantService:
         self.gateway = gateway
         self.max_context_chunks = max_context_chunks
 
+    def _build_widget_embed_script(self, tenant_id: str) -> str:
+        return (
+            f"<script src='{settings.widget_script_src}' "
+            f"data-tenant-id='{tenant_id}' "
+            f"data-theme='{settings.widget_default_theme}' "
+            f"data-position='{settings.widget_default_position}' "
+            f"data-primary-color='{settings.widget_default_primary_color}'></script>"
+        )
+
     async def create_tenant(self, payload: TenantCreateRequest, db: AsyncSession) -> TenantCreateResponse:
         existing = await db.execute(
             select(TenantEntity.id).where(TenantEntity.domain == payload.domain),
@@ -65,16 +74,9 @@ class AssistantService:
 
         await db.commit()
 
-        widget_embed_script = (
-            "<script src='https://cdn.your-app.com/widget.js' "
-            f"data-tenant-id='{tenant.id}' "
-            "data-theme='light' "
-            "data-position='bottom-right' "
-            "data-primary-color='#0f766e'></script>"
-        )
         return TenantCreateResponse(
             tenant_id=str(tenant.id),
-            widget_embed_script=widget_embed_script,
+            widget_embed_script=self._build_widget_embed_script(str(tenant.id)),
         )
 
     async def ingest_knowledge(self, tenant_id: str, payload: KnowledgeIngestRequest, db: AsyncSession) -> dict:

@@ -1,70 +1,134 @@
-# Mayank7211 Portfolio
+# Mayank Aura
 
-This repository now serves as a recruiter-friendly portfolio for the AI work you built in this workspace, centered on the AI Assistant Builder project.
+> ML Engineer portfolio, AI systems work, and public project showcase.
 
-## Featured work
-- [PROJECTS_INDEX.md](PROJECTS_INDEX.md) - one-page index of the project and portfolio assets
-- [PORTFOLIO_README.md](PORTFOLIO_README.md) - main public-facing GitHub profile summary
-- [PROJECT_SHOWCASE.md](PROJECT_SHOWCASE.md) - technical deep-dive on the AI Assistant Builder
-- [SKILLS_AND_EXPERIENCE.md](SKILLS_AND_EXPERIENCE.md) - ML, Python, FastAPI, and systems skills
-- [RECRUITER_QUICKSTART.md](RECRUITER_QUICKSTART.md) - fast overview for hiring managers
-- [GITHUB_UPLOAD_GUIDE.md](GITHUB_UPLOAD_GUIDE.md) - GitHub publishing steps
+This repository is the public-facing home for my work and the place I want to share with recruiters, collaborators, and anyone curious about what I build.
 
-## Other projects to showcase
-- [Mayank7211/Mayank7211](https://github.com/Mayank7211/Mayank7211) - GitHub profile repository and public entry point
-- [Mayank7211/Mayank7211.github.io](https://github.com/Mayank7211/Mayank7211.github.io) - personal portfolio website on GitHub Pages
-- [Mayank7211/Resturant-app](https://github.com/Mayank7211/Resturant-app) - full-stack restaurant ordering application
-- [Mayank7211/ai-reel-automator](https://github.com/Mayank7211/ai-reel-automator) - AI-powered automation tool for reel creation
+## Live site
 
-## Main project in this repo
-- AI Assistant Builder for local businesses
-- Multi-tenant backend API with FastAPI
-- React + Vite onboarding and chat UI
-- Model gateway abstraction with routing and fallback
-- Postgres-backed persistence for tenants, knowledge, and conversations
-- Docker compose stack for local development
+- Domain: [mayankaura.me](https://mayankaura.me)
+- Portfolio target: a polished, interactive public site with custom branding, project cards, and clear contact paths
+- Hosting direction: free static hosting for the frontend, with optional API hosting if the site needs live backend features
 
-## Project layout
-- apps/backend: FastAPI API and assistant orchestration
-- apps/frontend: React onboarding and chat testing UI
-- infra/sql: database schema scripts
-- widget: embeddable assistant widget assets
+## Featured projects
 
-## Quick start with Docker
-1. From workspace root run:
-   - docker compose up --build
-2. Open frontend at:
-   - http://localhost:3000
-3. Backend health:
-   - http://localhost:8000/health
+### 1. [Mayank7211](https://github.com/Mayank7211/Mayank7211)
+My GitHub profile repository and personal landing page.
 
-## Quick start without Docker
-### Backend
-1. Open terminal in apps/backend.
-2. Create virtual environment and activate.
-3. Install dependencies with pip install -r requirements.txt.
-4. Set a local DB URL (example):
-   - AI_AGENT_DATABASE_URL=sqlite+aiosqlite:///./sql_app.db
-5. Run API:
-   - uvicorn app.main:app --reload --port 8000
+What it shows:
+- Personal brand and public entry point
+- Recruiter-facing summary of my strongest work
+- A clean overview of skills, projects, and interests
 
-### Frontend
-1. Open terminal in apps/frontend.
-2. Install dependencies:
-   - npm install
-3. Run dev server:
-   - npm run dev
-4. Open local URL printed by Vite (default http://localhost:5173).
+### 2. [Mayank7211.github.io](https://github.com/Mayank7211/Mayank7211.github.io)
+My portfolio website repository.
+
+What it shows:
+- Public portfolio website
+- Modern web presentation for my projects
+- A place for a more visual, interactive experience
+
+### 3. [Resturant-app](https://github.com/Mayank7211/Resturant-app)
+Full-stack restaurant ordering application.
+
+What it shows:
+- End-to-end application design
+- JavaScript, Python, CSS, HTML, Docker, and shell scripting
+- Real product thinking around ordering and admin workflows
+
+### 4. [ai-reel-automator](https://github.com/Mayank7211/ai-reel-automator)
+AI-powered automation tool for reel creation.
+
+What it shows:
+- Python-based automation
+- Video and engagement processing ideas
+- Practical AI/ML-style workflow automation
+
+### 5. [AI Assistant Builder](PROJECTS_INDEX.md)
+The main production-style AI system in this workspace.
+
+What it shows:
+- FastAPI backend
+- Multi-tenant architecture
+- LLM integration and routing
+- Document ingestion and analytics
+- React admin UI and embeddable widget
+
+## What I build
+
+- Python systems with FastAPI and async services
+- AI and ML features that can be shipped to real users
+- Frontends that are simple to use and strong on presentation
+- Tools that are cost-aware, maintainable, and easy to deploy
+
+## Tech stack
+
+- Python
+- FastAPI
+- React
+- Vite
+- PostgreSQL
+- Docker
+- JavaScript
+- TypeScript
+- TensorFlow interest and ML experimentation
+
+## Why this repo exists
+
+- To give recruiters one clean public place to understand my work
+- To make my projects easy to star, browse, and share
+- To show both engineering depth and product thinking
+- To support a future public site on my own domain
+
+## Public site goals
+
+- Interactive hero section
+- Strong visuals and smooth motion
+- Project cards with links to GitHub repos
+- Clear skills and experience section
+- Contact or profile links that are easy to find
+- Mobile-friendly and recruiter-friendly layout
+
+## Supporting docs
+
+- [PROJECTS_INDEX.md](PROJECTS_INDEX.md) - project and portfolio index
+- [PORTFOLIO_README.md](PORTFOLIO_README.md) - profile summary
+- [PROJECT_SHOWCASE.md](PROJECT_SHOWCASE.md) - AI Assistant Builder deep dive
+- [SKILLS_AND_EXPERIENCE.md](SKILLS_AND_EXPERIENCE.md) - skills and learning summary
+- [RECRUITER_QUICKSTART.md](RECRUITER_QUICKSTART.md) - quick recruiter view
+- [GITHUB_UPLOAD_GUIDE.md](GITHUB_UPLOAD_GUIDE.md) - publishing steps
+
+## If you want to run the main project locally
+
+### Docker
+1. Run `docker compose up --build`
+2. Open the frontend at `http://localhost:3000`
+3. Check backend health at `http://localhost:8000/health`
+
+### Backend without Docker
+1. Open a terminal in `apps/backend`
+2. Create and activate a virtual environment
+3. Run `pip install -r requirements.txt`
+4. Set `AI_AGENT_DATABASE_URL=sqlite+aiosqlite:///./sql_app.db`
+5. Run `uvicorn app.main:app --reload --port 8000`
+
+### Frontend without Docker
+1. Open a terminal in `apps/frontend`
+2. Run `npm install`
+3. Run `npm run dev`
+4. Open the local Vite URL
 
 ## Current MVP API
-- GET /health
-- POST /api/tenants
-- POST /api/tenants/{tenant_id}/knowledge
-- POST /api/chat
 
-## Next production steps
-- Add pgvector embeddings and semantic retrieval
-- Add tenant auth, API keys, and strict rate limiting
-- Add real model providers via environment-driven gateway
-- Add conversation persistence and evaluation tests
-- Add Cloudflare deployment and edge protections
+- `GET /health`
+- `POST /api/tenants`
+- `POST /api/tenants/{tenant_id}/knowledge`
+- `POST /api/chat`
+
+## Next public-site upgrades
+
+- Deploy the frontend to `mayankaura.me`
+- Add a custom animated landing page
+- Add live project cards and stars/download links
+- Add a contact section and social links
+- Add screenshots and visual previews for each project

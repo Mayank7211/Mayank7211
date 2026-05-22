@@ -41,3 +41,21 @@ def test_create_tenant_rejects_empty_services(client, monkeypatch) -> None:
     detail = response.json()["detail"]
     services_error = next(item for item in detail if item["loc"][-1] == "services")
     assert "services entries must be non-empty strings" in services_error["msg"]
+
+
+def test_create_tenant_rejects_blank_required_text_fields(client) -> None:
+    payload = {
+        "business_name": "  ",
+        "domain": "invalid domain",
+        "category": " ",
+        "description": "Skin and wellness consultations",
+        "services": ["Consultation"],
+    }
+
+    response = client.post("/api/tenants", json=payload)
+
+    assert response.status_code == 422
+    detail = response.json()["detail"]
+    assert any(item["loc"][-1] == "business_name" and "must not be blank" in item["msg"] for item in detail)
+    assert any(item["loc"][-1] == "domain" and "valid domain name" in item["msg"] for item in detail)
+    assert any(item["loc"][-1] == "category" and "must not be blank" in item["msg"] for item in detail)

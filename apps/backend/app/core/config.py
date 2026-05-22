@@ -16,6 +16,10 @@ class Settings(BaseSettings):
     owner_access_secret: str = "change-me-owner-secret"
     owner_auth_header: str = "X-Owner-Token"
     allowed_cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
+    widget_script_src: str = "https://cdn.your-app.com/widget.js"
+    widget_default_theme: str = "light"
+    widget_default_position: str = "bottom-right"
+    widget_default_primary_color: str = "#0f766e"
 
     @field_validator("allowed_cors_origins", mode="before")
     @classmethod

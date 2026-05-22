@@ -1,7 +1,13 @@
+import re
 from typing import List, Optional
 from uuid import uuid4
 
 from pydantic import BaseModel, Field, HttpUrl, field_validator
+
+
+_DOMAIN_PATTERN = re.compile(
+    r"^(?=.{3,255}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+)
 
 
 class FAQItem(BaseModel):
@@ -23,6 +29,24 @@ class TenantCreateRequest(BaseModel):
     description: str = Field(default="", max_length=2000)
     faqs: List[FAQItem] = Field(default_factory=list, max_length=100)
     contact: ContactInfo = Field(default_factory=ContactInfo)
+
+    @field_validator("business_name", "category")
+    @classmethod
+    def validate_required_text_fields(cls, value: str) -> str:
+        cleaned = value.strip()
+        if len(cleaned) < 2:
+            raise ValueError("must not be blank")
+        return cleaned
+
+    @field_validator("domain")
+    @classmethod
+    def validate_domain(cls, value: str) -> str:
+        cleaned = value.strip().lower()
+        if not cleaned or any(separator in cleaned for separator in (" ", "/", "?", "#", "://")):
+            raise ValueError("must be a valid domain name like example.com")
+        if not _DOMAIN_PATTERN.fullmatch(cleaned):
+            raise ValueError("must be a valid domain name like example.com")
+        return cleaned
 
     @field_validator("services")
     @classmethod
