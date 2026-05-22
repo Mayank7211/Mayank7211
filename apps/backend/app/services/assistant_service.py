@@ -186,6 +186,18 @@ class AssistantService:
                 handoff_recommended=handoff_recommended,
             ),
         )
+
+        # If reservation intent is detected, persist a reservation record
+        if reservation_detected:
+            db.add(
+                ReservationEntity(
+                    tenant_id=payload.tenant_id,
+                    session_id=payload.session_id,
+                    notes=f"user: {payload.message} | assistant: {model_response.answer}",
+                    status="pending",
+                )
+            )
+
         await db.commit()
 
         return ChatResponse(
