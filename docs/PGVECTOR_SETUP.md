@@ -57,4 +57,35 @@ Notes
 - The current `PgVectorAdapter` is a scaffold that fetches raw_text and ranks client-side; full vector similarity will require the embedding pipeline and schema updates.
  - The repository includes `infra/sql/002_add_embeddings.sql` and `apps/backend/scripts/compute_embeddings.py` as starting points.
  - The repository now includes an async worker at `apps/backend/scripts/async_compute_embeddings.py` which is the recommended tool to batch-populate embeddings.
+ - The repository now includes an async worker at `apps/backend/scripts/async_compute_embeddings.py` which is the recommended tool to batch-populate embeddings.
+ - Use `apps/backend/scripts/run_embedding_worker.py` to keep the worker running; a systemd template is provided at `infra/systemd/embedding-worker.service`.
+
+Running the worker as a background service (systemd)
+-------------------------------------------------
+
+1. Copy the systemd template and update paths and environment variables:
+
+   ```sh
+   sudo cp infra/systemd/embedding-worker.service /etc/systemd/system/embedding-worker.service
+   sudo systemctl daemon-reload
+   sudo systemctl enable --now embedding-worker.service
+   ```
+
+2. Check the service logs:
+
+   ```sh
+   sudo journalctl -u embedding-worker.service -f
+   ```
+
+Running the worker manually (development)
+----------------------------------------
+
+Start in the foreground (useful for debugging):
+
+```bash
+AI_AGENT_DATABASE_URL="postgresql+asyncpg://postgres:postgres@localhost:5433/testdb" \
+AI_AGENT_OPENAI_API_KEY="sk-..." \
+python apps/backend/scripts/run_embedding_worker.py
+```
+
 - Consider using a managed vector DB (Pinecone, Weaviate, or Milvus) if you prefer not to host pgvector.

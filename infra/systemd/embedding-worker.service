@@ -1,0 +1,16 @@
+[Unit]
+Description=AI Agent Embedding Worker
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/ai-agent
+Environment=AI_AGENT_DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/yourdb
+Environment=AI_AGENT_OPENAI_API_KEY=YOUR_KEY_HERE
+ExecStart=/usr/bin/python3 apps/backend/scripts/run_embedding_worker.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
