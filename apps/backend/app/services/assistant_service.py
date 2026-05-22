@@ -13,6 +13,7 @@ from app.models.schemas import (
     TenantCreateResponse,
 )
 from app.services.knowledge import rank_context_blocks, default_vector_adapter
+from apps.backend.app.services.cross_encoder_reranker import default_reranker
 from app.core.config import settings
 from app.services.model_gateway import (
     BackupOpenModelProvider,
@@ -20,6 +21,9 @@ from app.services.model_gateway import (
     ModelGateway,
     ModelRequest,
 )
+
+
+_rerank_cache: dict = {}
 
 
 class AssistantService:
@@ -139,6 +143,11 @@ class AssistantService:
 
     async def _load_context(self, tenant_id: str, query: str, db: AsyncSession) -> list[str]:
         """Load context using the configured vector adapter if available, otherwise fall back to DB token-overlap ranking."""
+        # Return cached reranked result if recently computed
+        cache_key = (tenant_id, query)
+        cached = _rerank_cache.get(cache_key)
+        if cached:
+            return cached
         # prefer adapter-based retrieval (pluggable)
         try:
             top_k = getattr(settings, "retrieval_k", self.max_context_chunks)
@@ -147,6 +156,27 @@ class AssistantService:
             if hasattr(results, "__await__"):
                 results = await results
             if results:
+                # If reranker is enabled in settings, schedule a background task
+                try:
+                    if getattr(settings, "enable_reranker", False):
+                        reranker = default_reranker()
+                        # schedule non-blocking rerank to populate cache for next calls
+                        async def _do_rerank(q=query, docs=results, tid=tenant_id, rk=reranker):
+                            try:
+                                ranked = rk.rerank(q, docs)
+                                # store only passages in order
+                                _rerank_cache[(tid, q)] = [p for (p, _s) in ranked]
+                            except Exception:
+                                pass
+
+                        try:
+                            asyncio.create_task(_do_rerank())
+                        except RuntimeError:
+                            loop = asyncio.get_event_loop()
+                            loop.create_task(_do_rerank())
+                except Exception:
+                    pass
+
                 return results
         except Exception:
             # adapter failed or not configured; fall back to DB token-overlap
