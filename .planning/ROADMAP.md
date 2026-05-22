@@ -3,7 +3,7 @@
 
 ## Phases
 
-- [ ] **Phase 1: Secure Onboarding Foundation** - Owners can onboard and embed safely with tenant security guardrails in place.
+- [x] **Phase 1: Secure Onboarding Foundation** - Owners can onboard and embed safely with tenant security guardrails in place.
 - [ ] **Phase 2: Tenant-Aware Chat Baseline** - Visitors can use live chat with coherent tenant-specific responses.
 - [ ] **Phase 3: Reservation Capture and Notification Reliability** - Booking intent is captured, persisted, and delivered to owners reliably.
 - [ ] **Phase 4: Knowledge Runtime and Escalation Visibility** - Knowledge-grounded answers and low-confidence flags improve response quality.
@@ -27,7 +27,7 @@ Plans:
 - [x] 01-00-PLAN.md - Produce Wave 0 backend test scaffolds for ONB-01..04 and SEC-01..03 before implementation waves.
 - [x] 01-01-PLAN.md - Enforce tenant authorization dependencies and explicit-origin CORS hardening.
 - [x] 01-02-PLAN.md - Implement strict onboarding contracts, parameterized widget snippet defaults, and abuse guardrails.
-- [ ] 01-03-PLAN.md - Deliver onboarding UI error clarity and complete Phase 1 automated verification coverage.
+- [x] 01-03-PLAN.md - Deliver onboarding UI error clarity and complete Phase 1 automated verification coverage.
 
 ### Phase 2: Tenant-Aware Chat Baseline
 **Goal**: Website visitors can interact with the widget and receive context-aware responses for the correct business tenant.
@@ -74,7 +74,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Secure Onboarding Foundation | 2/3 | Executing | 01-03-PLAN.md |
+| 1. Secure Onboarding Foundation | 4/4 | Completed | 01-03-SUMMARY.md |
 | 2. Tenant-Aware Chat Baseline | 0/0 | Not started | - |
 | 3. Reservation Capture and Notification Reliability | 0/0 | Not started | - |
 | 4. Knowledge Runtime and Escalation Visibility | 0/0 | Not started | - |
