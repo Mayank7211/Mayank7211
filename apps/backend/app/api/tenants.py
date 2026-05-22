@@ -7,6 +7,9 @@ from app.db.session import get_db_session
 from app.models.schemas import KnowledgeIngestRequest, TenantCreateRequest, TenantCreateResponse
 from app.services.assistant_service import assistant_service
 from app.services.document_parser import parse_document
+from app.services.feature_flags import feature_flags
+from fastapi import Body
+import hashlib
 
 router = APIRouter(prefix="/tenants", tags=["tenants"])
 
@@ -108,3 +111,19 @@ async def upload_document(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error processing document: {str(e)}"
         )
+
+
+
+@router.get("/{tenant_id}/feature_flags")
+async def get_feature_flags(tenant_id: str):
+    """Return stored feature flags for a tenant (read from Redis/in-memory)."""
+    enabled = await feature_flags.get_flag(tenant_id, "enable_reranker")
+    return {"enable_reranker": bool(enabled)}
+
+
+@router.post("/{tenant_id}/feature_flags")
+async def set_feature_flags(tenant_id: str, payload: dict = Body(...)):
+    """Set feature flags for a tenant. Example payload: {"enable_reranker": true}"""
+    if "enable_reranker" in payload:
+        await feature_flags.set_flag(tenant_id, "enable_reranker", bool(payload["enable_reranker"]))
+    return {"ok": True}

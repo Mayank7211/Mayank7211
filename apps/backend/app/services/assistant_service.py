@@ -13,7 +13,8 @@ from app.models.schemas import (
     TenantCreateResponse,
 )
 from app.services.knowledge import rank_context_blocks, default_vector_adapter
-from apps.backend.app.services.cross_encoder_reranker import default_reranker
+from app.services.cross_encoder_reranker import default_reranker
+from app.services.feature_flags import feature_flags
 from app.core.config import settings
 from app.services.model_gateway import (
     BackupOpenModelProvider,
@@ -157,23 +158,31 @@ class AssistantService:
                 results = await results
             if results:
                 # If reranker is enabled in settings, schedule a background task
-                try:
-                    if getattr(settings, "enable_reranker", False):
-                        reranker = default_reranker()
-                        # schedule non-blocking rerank to populate cache for next calls
-                        async def _do_rerank(q=query, docs=results, tid=tenant_id, rk=reranker):
-                            try:
-                                ranked = rk.rerank(q, docs)
-                                # store only passages in order
-                                _rerank_cache[(tid, q)] = [p for (p, _s) in ranked]
-                            except Exception:
-                                pass
 
+                try:
+                    # Check per-tenant flag (async) — schedule rerank background task if enabled
+                    async def _maybe_schedule():
                         try:
-                            asyncio.create_task(_do_rerank())
-                        except RuntimeError:
-                            loop = asyncio.get_event_loop()
-                            loop.create_task(_do_rerank())
+                            enabled = await feature_flags.get_flag(tenant_id, "enable_reranker")
+                            if enabled:
+                                reranker = default_reranker()
+
+                                async def _do_rerank(q=query, docs=results, tid=tenant_id, rk=reranker):
+                                    try:
+                                        ranked = rk.rerank(q, docs)
+                                        _rerank_cache[(tid, q)] = [p for (p, _s) in ranked]
+                                    except Exception:
+                                        pass
+
+                                asyncio.create_task(_do_rerank())
+                        except Exception:
+                            pass
+
+                    try:
+                        asyncio.create_task(_maybe_schedule())
+                    except RuntimeError:
+                        loop = asyncio.get_event_loop()
+                        loop.create_task(_maybe_schedule())
                 except Exception:
                     pass
 
