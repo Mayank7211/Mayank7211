@@ -22,9 +22,9 @@ class ContactInfo(BaseModel):
 
 
 class TenantCreateRequest(BaseModel):
-    business_name: str = Field(min_length=2, max_length=120)
-    domain: str = Field(min_length=3, max_length=255)
-    category: str = Field(min_length=2, max_length=80)
+    business_name: str = Field(max_length=120)
+    domain: str = Field(max_length=255)
+    category: str = Field(max_length=80)
     services: List[str] = Field(min_length=1, max_length=50)
     description: str = Field(default="", max_length=2000)
     faqs: List[FAQItem] = Field(default_factory=list, max_length=100)

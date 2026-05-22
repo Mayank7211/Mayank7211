@@ -26,7 +26,7 @@
 Plans:
 - [x] 01-00-PLAN.md - Produce Wave 0 backend test scaffolds for ONB-01..04 and SEC-01..03 before implementation waves.
 - [x] 01-01-PLAN.md - Enforce tenant authorization dependencies and explicit-origin CORS hardening.
-- [ ] 01-02-PLAN.md - Implement strict onboarding contracts, parameterized widget snippet defaults, and abuse guardrails.
+- [x] 01-02-PLAN.md - Implement strict onboarding contracts, parameterized widget snippet defaults, and abuse guardrails.
 - [ ] 01-03-PLAN.md - Deliver onboarding UI error clarity and complete Phase 1 automated verification coverage.
 
 ### Phase 2: Tenant-Aware Chat Baseline
@@ -74,7 +74,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Secure Onboarding Foundation | 0/3 | Planned | - |
+| 1. Secure Onboarding Foundation | 2/3 | Executing | 01-03-PLAN.md |
 | 2. Tenant-Aware Chat Baseline | 0/0 | Not started | - |
 | 3. Reservation Capture and Notification Reliability | 0/0 | Not started | - |
 | 4. Knowledge Runtime and Escalation Visibility | 0/0 | Not started | - |
