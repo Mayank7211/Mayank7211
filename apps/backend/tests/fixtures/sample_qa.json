@@ -1,0 +1,16 @@
+[
+  {
+    "query": "what are your opening hours",
+    "relevant": [
+      "We are open Monday to Friday from 9am to 6pm.",
+      "Open weekdays 9-6"
+    ]
+  },
+  {
+    "query": "how to book an appointment",
+    "relevant": [
+      "To book an appointment call 555-1234 or use our booking page.",
+      "Book online via our appointments page"
+    ]
+  }
+]
