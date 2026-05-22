@@ -56,4 +56,5 @@ Notes
 -----
 - The current `PgVectorAdapter` is a scaffold that fetches raw_text and ranks client-side; full vector similarity will require the embedding pipeline and schema updates.
  - The repository includes `infra/sql/002_add_embeddings.sql` and `apps/backend/scripts/compute_embeddings.py` as starting points.
+ - The repository now includes an async worker at `apps/backend/scripts/async_compute_embeddings.py` which is the recommended tool to batch-populate embeddings.
 - Consider using a managed vector DB (Pinecone, Weaviate, or Milvus) if you prefer not to host pgvector.
